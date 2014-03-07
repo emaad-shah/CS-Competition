@@ -33,7 +33,7 @@ public class wordCheck
 				count++;
 			}
 			scanner.close();
-        } 
+        	} 
 	    catch (FileNotFoundException e) 
 	    {
 	    	e.printStackTrace();
