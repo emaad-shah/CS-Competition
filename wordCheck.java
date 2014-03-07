@@ -23,7 +23,7 @@ public class wordCheck
 		int count = 0;
 		File file = new File("WordList.txt"); 
 		try 
-	    {
+	    	{
 			Scanner scanner = new Scanner(file);
 	 
 			while (scanner.hasNextLine()) 
