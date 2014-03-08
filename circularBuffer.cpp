@@ -178,6 +178,10 @@ int main(void)
 	// Test Case 2
 	CB test2("circularFile2.txt");
 	cout << endl << "****End of Test 2****" << endl;
+	// Test Case 2
+	CB test3("circularFile3.txt");
+	cout << endl << "****End of Test 3****" << endl;
+
 	system("pause");
 	return 0;
 }
