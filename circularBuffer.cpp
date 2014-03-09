@@ -26,11 +26,11 @@ bool CB::readFile(const string &fileName)
 		fileError(fileName);
 	else
 	{
-		// First line of the file contains the queue size
+		// First line of the file contains the buffer size
 		file >> size;
 		if (size > bufferSize || size < 0)
 		{
-			constraints();
+			bufferSizeError();
 			return false;
 		}
 		else
@@ -52,6 +52,8 @@ bool CB::readFile(const string &fileName)
 						getline(file, line);
 						if (line.length() <= totalChar)
 							append(line);
+						else
+							totalCharError();
 					}
 					commands++;
 				}
@@ -86,10 +88,16 @@ CB::~CB()
 	delete [] c;
 }
 
-// Specification not met
-void CB::constraints()
+// Total number of character error
+void CB::totalCharError()
 {
-	cerr << "Constraints not met. Please check specification" << endl;
+	cerr << "Error: Total number of characters in input <= 20000000" << endl;
+}
+
+// Display Buffer Size Error
+void CB::bufferSizeError()
+{
+	cerr << "Error: Buffer size must be 0 <= N <= 10000" << endl;
 }
 
 // File cant be opened prompt
@@ -98,7 +106,7 @@ void CB::fileError(const string & file)
 	cerr << "Could not open " << file << endl;
 }
 
-// Appends an element to the circular queue
+// Appends an element to the circular buffer
 void CB::append(const string & a)
 {
 	// Reset head and tail to first index if
@@ -123,14 +131,15 @@ void CB::append(const string & a)
 		count++;
 }
 
-// Removes r elements from the circular queue
+// Removes r elements from the circular buffer
 void CB::remove(int r)
 {
 	if (isEmpty())
 		return;
-	// Can only remove items that really exists
+	// Number of removing elements will <= number
+	// of elements presents in circular buffer
 	if (r > count)
-		r = count;
+		return;
 	while (r-- > 0)
 	{
 		// If the circular buffer has 
@@ -148,14 +157,16 @@ void CB::remove(int r)
 // Display current elements in the circular buffer
 void CB::list()
 {
-	cout << endl << "Printing items in the circular buffer" << endl;
-	cout << "Head: " << head << " Tail: " << tail << endl;
-	cout << endl;
-	for (int i = head; i < size; i++)
-		cout << c[i].word << setw(10);
-	for (int i = 0; i < head; i++)
-		cout << setw(10) << c[i].word << setw(10);
-	cout << endl;
+	// Display only buffer has data in it
+	if (count > 0)
+	{
+		cout << endl;
+		for (int i = head; i < size; i++)
+			cout << c[i].word << setw(10);
+		for (int i = 0; i < head; i++)
+			cout << setw(10) << c[i].word << setw(10);
+		cout << endl;
+	}
 }
 
 // Check if the ciricular buffer is full
@@ -173,15 +184,22 @@ bool CB::isEmpty()
 int main(void)
 {
 	// Test Case 1
+	cout << endl << "****Start of Test 1****" << endl;
 	CB test1("circularFile.txt");
 	cout << endl << "****End of Test 1****" << endl;
 	// Test Case 2
+	cout << endl << "****Start of Test 2****" << endl;
 	CB test2("circularFile2.txt");
 	cout << endl << "****End of Test 2****" << endl;
-	// Test Case 2
+	// Test Case 3
+	cout << endl << "****Start of Test 3****" << endl;
 	CB test3("circularFile3.txt");
 	cout << endl << "****End of Test 3****" << endl;
-
+	// Test Case 4
+	cout << endl << "****Start of Test 4****" << endl;
+	CB test4("circularFile4.txt");
+	cout << endl << "****End of Test 4****" << endl;
+	
 	system("pause");
 	return 0;
 }
