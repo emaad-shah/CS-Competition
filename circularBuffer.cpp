@@ -162,9 +162,15 @@ void CB::list()
 	{
 		cout << endl;
 		for (int i = head; i < size; i++)
-			cout << c[i].word << setw(10);
+		{
+			if (!c[i].word.empty())
+				cout << c[i].word << endl;
+		}
 		for (int i = 0; i < head; i++)
-			cout << setw(10) << c[i].word << setw(10);
+		{
+			if (!c[i].word.empty())
+				cout << c[i].word << endl;
+		}
 		cout << endl;
 	}
 }
